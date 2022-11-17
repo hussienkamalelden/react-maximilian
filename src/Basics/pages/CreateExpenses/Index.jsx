@@ -1,10 +1,13 @@
 import ExpenseItem from "../../components/Expenses/ExpenseItem";
-import Card from '../../components/UI/Card/index';
+import Card from '../../components/Card/index';
 import "./style.scss"
+import { useState } from 'react';
+import NewExpense from "../../components/Expenses/NewExpense";
+import ExpensesFilter from "../../components/Expenses/ExpensesFilter";
 
 const Basics = () => {
 
-    const expenses = [
+    const allExpenses = [
         {
             id: 'e1',
             title: 'Toilet Paper',
@@ -26,10 +29,35 @@ const Basics = () => {
         },
     ];
 
+    const [expenses, setExpenses] = useState(allExpenses);
+    const [title, setTitle] = useState("");
+    const [amount, setAmount] = useState("");
+    const [date, setDate] = useState(new Date());
+    const [option, setOption] = useState("all");
+
+    const submitBtn = (e) => {
+        e.preventDefault();
+        const newObj = { id: Math.random(), title, amount, date };
+        setTitle("");
+        setAmount("");
+        setDate(new Date());
+        setExpenses([newObj, ...expenses]);
+    }
+
     return (
         <>
             <Card className="ExpenseItems">
-                <ExpenseItem expenses={expenses} />
+                <NewExpense
+                    title={title}
+                    setTitle={setTitle}
+                    amount={amount}
+                    setAmount={setAmount}
+                    date={date}
+                    setDate={setDate}
+                    submitBtn={submitBtn}
+                />
+                <ExpensesFilter setOption={setOption} />
+                <ExpenseItem expenses={expenses} setExpenses={setExpenses} option={option} />
             </Card>
         </>
     );

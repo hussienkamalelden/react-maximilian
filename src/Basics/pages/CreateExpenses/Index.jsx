@@ -4,6 +4,7 @@ import "./style.scss"
 import { useState } from 'react';
 import NewExpense from "../../components/Expenses/NewExpense";
 import ExpensesFilter from "../../components/Expenses/ExpensesFilter";
+import AddNewItem from "../../components/Expenses/AddNewItem";
 
 const Basics = () => {
 
@@ -34,6 +35,7 @@ const Basics = () => {
     const [amount, setAmount] = useState("");
     const [date, setDate] = useState(new Date());
     const [option, setOption] = useState("all");
+    const [addAvaliable, setAddAvaliable] = useState(false);
 
     const submitBtn = (e) => {
         e.preventDefault();
@@ -41,21 +43,25 @@ const Basics = () => {
         setTitle("");
         setAmount("");
         setDate(new Date());
-        setExpenses([newObj, ...expenses]);
+        setExpenses(prev => [newObj, ...prev]);
+        setAddAvaliable(false);
     }
 
     return (
         <>
             <Card className="ExpenseItems">
-                <NewExpense
-                    title={title}
-                    setTitle={setTitle}
-                    amount={amount}
-                    setAmount={setAmount}
-                    date={date}
-                    setDate={setDate}
-                    submitBtn={submitBtn}
-                />
+                {!addAvaliable && <AddNewItem setAddAvaliable={setAddAvaliable} />}
+                {addAvaliable &&
+                    <NewExpense
+                        title={title}
+                        setTitle={setTitle}
+                        amount={amount}
+                        setAmount={setAmount}
+                        date={date}
+                        setDate={setDate}
+                        submitBtn={submitBtn}
+                        setAddAvaliable={setAddAvaliable}
+                    />}
                 <ExpensesFilter setOption={setOption} />
                 <ExpenseItem expenses={expenses} setExpenses={setExpenses} option={option} />
             </Card>

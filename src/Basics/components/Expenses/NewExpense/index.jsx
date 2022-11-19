@@ -12,7 +12,8 @@ const NewExpense = (props) => {
                 setAmount={props.setAmount}
                 date={props.date}
                 setDate={props.setDate}
-                submitBtn={props.submitBtn} />
+                submitBtn={props.submitBtn}
+                setAddAvaliable={props.setAddAvaliable} />
         </Card>
     );
 }

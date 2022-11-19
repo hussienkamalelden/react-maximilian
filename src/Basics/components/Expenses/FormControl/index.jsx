@@ -15,7 +15,7 @@ const FormControl = (props) => {
     }
 
     return (
-        <form onSubmit={props.submitBtn}>
+        <form onSubmit={props.submitBtn} onKeyDown={e => e.key == 'Enter' ? e.preventDefault() : ""}>
             <div className="new-expense__controls">
                 <div className="new-expense__control">
                     <label>Title</label>
@@ -31,6 +31,7 @@ const FormControl = (props) => {
                 </div>
             </div>
             <div className="new-expense__actions">
+                <button onClick={() => props.setAddAvaliable(false)}>Cancel</button>
                 <button type="submit">Add Expense</button>
             </div>
         </form>
